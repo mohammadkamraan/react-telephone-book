@@ -1,0 +1,18 @@
+.showDiv {
+  height: auto;
+  width: 20rem;
+  position: absolute;
+  left: 40%;
+  right: -60%;
+  top: 20rem;
+}
+.paragraphShow {
+  font-size: 1.75rem;
+}
+.paragraph{
+  font-size: 1.5rem;
+  color:white;
+}
+.deleteBtn{
+  font-size: 0.75rem;
+}
