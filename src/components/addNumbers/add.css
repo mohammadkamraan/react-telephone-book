@@ -1,5 +1,5 @@
 .div {
-  height: auto;
+  height: 15rem;
 }
 .phoneInput {
   padding: 0.5rem;
@@ -17,7 +17,7 @@
 .p {
   font-size: 1.75rem;
 }
+
 .button{
-  position: relative;
-  left:auto;
+  color: white;
 }
