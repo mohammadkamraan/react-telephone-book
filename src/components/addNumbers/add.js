@@ -19,7 +19,7 @@ const Add = () => {
         setAudience(name)
     }
     const sendToRedux = () => {
-        axios.post(`https://react-telephone-book-default-rtdb.asia-southeast1.firebasedatabase.app/telephone.json`, [phone, audience])
+        axios.post(`https://react-telephone-book-default-rtdb.asia-southeast1.firebasedatabase.app/telephone.json`, { phoneNum: phone, contact: audience })
             .then(response => {
                 dispatch(sendID(response.data.name))
             })
