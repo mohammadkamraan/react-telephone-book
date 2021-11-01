@@ -20,15 +20,16 @@ const Show = () => {
         setDtails(newDtails)
     }
 
-    const getRequest = () => {
+    const getRequest = async () => {
         axios.get(`https://react-telephone-book-default-rtdb.asia-southeast1.firebasedatabase.app/telephone.json`)
             .then(response => {
                 Object.entries(response.data).map(([key, value]) => {
                     let names = allDtails
+                    console.log('request send')
                     names.push(value)
                     setDtails(names)
-                    console.log(allDtails)
                 })
+                console.log(allDtails)
             })
             .catch(e => {
                 console.log(e)
@@ -36,14 +37,22 @@ const Show = () => {
     }
 
     useEffect(() => {
+        getRequest()
         // let names = allDtails
         // names.push(name)
         // setDtails(names)
         // let phones = allDtails
         // phones.push(phone)
         // setDtails(phones)
-        getRequest()
+
+        // allDtails.map((number, index) => {
+        //     console.log(number, index)
+        // })
     }, [name, phone])
+
+    // let showContacts = allDtails.map((number, index) => {
+    //     console.log(number, index)
+    // })
 
     return (
         <div className='showDiv container  mt-5 bg-gray-400 rounded-lg  p-auto  mh-100'>
