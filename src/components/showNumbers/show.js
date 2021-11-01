@@ -1,59 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import './add.css';
+import { sendNums, sendNames, sendID } from '../actions';
 
-import './show.css';
-
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
-const Show = () => {
-    const [allDtails, setDtails] = useState(
-        []
-    )
-    const name = useSelector(state => state.Audience)
-    const phone = useSelector(state => state.telephone)
-    const id = useSelector(state => state.Id)
+const Add = () => {
+    const [phone, setPhone] = useState('')
+    const [audience, setAudience] = useState('')
+    const dispatch = useDispatch()
 
-    console.log(id)
-
-    const deleteAudience = (dt) => {
-        let newDtails = allDtails.filter(item => item !== dt)
-        setDtails(newDtails)
+    const savePhone = (e) => {
+        let phoneNum = e.target.value
+        setPhone(phoneNum)
     }
-
-    const getRequest = () => {
-        axios.get(`https://react-telephone-book-default-rtdb.asia-southeast1.firebasedatabase.app/telephone.json`)
+    const saveName = (e) => {
+        let name = e.target.value
+        setAudience(name)
+    }
+    const sendToRedux = () => {
+        axios.post(`https://react-telephone-book-default-rtdb.asia-southeast1.firebasedatabase.app/telephone.json`, { phoneNum: phone, contact: audience })
             .then(response => {
-                Object.entries(response.data).map(([key, value]) => {
-                    console.log(key, value)
-                    setDtails(value)
-                    console.log(allDtails)
-                })
+                dispatch(sendID(response.data.name))
             })
             .catch(e => {
                 console.log(e)
             })
+
+        dispatch(sendNums(phone))
+        dispatch(sendNames(audience))
     }
-
-    useEffect(() => {
-        // let names = allDtails
-        // names.push(name)
-        // setDtails(names)
-        // let phones = allDtails
-        // phones.push(phone)
-        // setDtails(phones)
-        getRequest()
-    }, [name, phone])
-
     return (
-        <div className='showDiv bg-yellow-300 rounded-lg'>
-            <p className='paragraphShow text-pink-400 text-center'>youre Audience</p>
-            {allDtails.map((number, index) => <div key={index}>
-                <p className='paragraph mb-2 inline mr-2'>{number}</p>
-                <button className='deleteBtn rounded-lg bg-red-400 hover:bg-red-500 p-1 
-                text-gray-300
-                ' onClick={() => deleteAudience(number)}>delete</button></div>)}
+        <div className='div bg-blue-300 rounded-lg'>
+            <p className='p text-white text-center'>please add info</p>
+            <input type='text' placeholder='phone' className='phoneInput border-2 border-blue-300 rounded-lg 
+            bg-purple-200 inline-block placeholder-white hover:bg-purple-300'
+
+                onChange={savePhone} />
+            <input type='text' placeholder='name' className='nameInput bg-purple-200 
+            border-2 border-blue-300 rounded-lg placeholder-white hover:bg-purple-300'
+                onChange={saveName} />
+            <button className='btn bg-green-300 p-2 rounded-lg
+            hover:bg-green-400 text-white'
+                onClick={sendToRedux}>send</button>
         </div>
     );
 }
 
-export default Show;
+export default Add;
