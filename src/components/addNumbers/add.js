@@ -31,17 +31,17 @@ const Add = () => {
         dispatch(sendNames(audience))
     }
     return (
-        <div className='div bg-blue-300 rounded-lg'>
+        <div className='div container mt-2 bg-blue-300 rounded-lg block'>
             <p className='p text-white text-center'>please add info</p>
             <input type='text' placeholder='phone' className='phoneInput border-2 border-blue-300 rounded-lg 
-            bg-purple-200 inline-block placeholder-white hover:bg-purple-300'
+            bg-purple-200 block placeholder-white hover:bg-purple-300 mx-auto'
 
                 onChange={savePhone} />
             <input type='text' placeholder='name' className='nameInput bg-purple-200 
-            border-2 border-blue-300 rounded-lg placeholder-white hover:bg-purple-300'
+            border-2 border-blue-300 rounded-lg placeholder-white hover:bg-purple-300 block
+            mx-auto'
                 onChange={saveName} />
-            <button className='btn bg-green-300 p-2 rounded-lg
-            hover:bg-green-400 text-white'
+            <button className='btn btn-success button block p-6 text-white containar x-auto'
                 onClick={sendToRedux}>send</button>
         </div>
     );

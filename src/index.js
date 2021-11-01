@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducer from "./components/reducer";
 
-
+import 'bootstrap/dist/css/bootstrap.css';
 
 const store = createStore(reducer)
 ReactDOM.render(

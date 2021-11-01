@@ -6,7 +6,7 @@ import Show from './components/showNumbers/show';
 
 const App = () => {
   return (
-    <div className='bg-gray-300 App' >
+    <div className='App' >
       <Add />
       <Show />
     </div>
