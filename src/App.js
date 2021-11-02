@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 
-import Add from './components/addNumbers/add';
-import Show from './components/showNumbers/show';
+import Add from './components/Contacts/add';
+import Show from './components/Contacts/show';
 
 const App = () => {
   return (
