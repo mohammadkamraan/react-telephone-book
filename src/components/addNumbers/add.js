@@ -11,7 +11,7 @@ const Add = () => {
     const dispatch = useDispatch()
 
     const savePhone = (e) => {
-        let phoneNum = e.target.value
+        let phoneNum = e.target.value.replace(/\D/g, '')
         setPhone(phoneNum)
     }
     const saveName = (e) => {
@@ -44,9 +44,13 @@ const Add = () => {
             mx-auto'
                 onChange={saveName}
                 value={audience} />
-            <button className='button bg-green-300 p-2 rounded-lg hover:bg-green-400 block
-                mx-auto'
-                onClick={sendToRedux}>save</button>
+            {
+                phone.length == 0 || audience.length == 0
+                    ? <p className='validationP  text-center'>please inter name and phone number</p>
+                    : <button className='button bg-green-300 p-2 rounded-lg hover:bg-green-400 block
+                    mx-auto'
+                        onClick={sendToRedux}>save</button>
+            }
         </div >
     );
 }
