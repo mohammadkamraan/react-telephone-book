@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import './show.css';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+
+import { sendID } from '../actions';
 
 const Show = () => {
     const [allDtails, setDtails] = useState(
@@ -13,31 +15,31 @@ const Show = () => {
     const phone = useSelector(state => state.telephone)
     const id = useSelector(state => state.Id)
 
-    console.log(id)
+    const dispatch = useDispatch()
 
-    const deleteAudience = (dt) => {
-        let newDtails = allDtails.filter(item => item !== dt)
+    const deleteAudience = (dt, db) => {
+        axios.delete(`https://react-telephone-book-default-rtdb.asia-southeast1.firebasedatabase.app/telephone/${db}.json`)
+            .catch(err => console.log(err))
+        console.log(dt, db)
+        let newDtails = allDtails.filter(item => item.contact !== dt)
         setDtails(newDtails)
     }
 
-    const getRequest = async () => {
-        axios.get(`https://react-telephone-book-default-rtdb.asia-southeast1.firebasedatabase.app/telephone.json`)
-            .then(response => {
-                Object.entries(response.data).map(([key, value]) => {
-                    let names = allDtails
-                    console.log('request send')
-                    names.push(value)
-                    setDtails(names)
-                })
-                console.log(allDtails)
+    let jsonHandler = (data) => {
+        let contacts = Object
+            .entries(data)
+            .map(([key, value]) => {
+                return {
+                    ...value,
+                    key
+                }
             })
-            .catch(e => {
-                console.log(e)
-            })
+
+        setDtails(contacts)
     }
 
+
     useEffect(() => {
-        getRequest()
         // let names = allDtails
         // names.push(name)
         // setDtails(names)
@@ -48,7 +50,15 @@ const Show = () => {
         // allDtails.map((number, index) => {
         //     console.log(number, index)
         // })
-    }, [name, phone])
+        setTimeout(() => {
+            axios.get(`https://react-telephone-book-default-rtdb.asia-southeast1.firebasedatabase.app/telephone.json`)
+                .then(response => jsonHandler(response.data))
+                .catch(e => {
+                    console.log(e)
+                })
+        }, 1000);
+
+    }, [phone, name])
 
     // let showContacts = allDtails.map((number, index) => {
     //     console.log(number, index)
@@ -63,9 +73,9 @@ const Show = () => {
                 <button className='deleteBtn rounded-lg bg-red-400 hover:bg-red-500 p-2
                 float-right 
                 text-gray-300
-                ' onClick={() => deleteAudience(number)}>delete</button></div>)}
-            {/* {allDtails.map((number, index) => {
-                console.log(number, index)
+                ' onClick={() => deleteAudience(number.contact, number.key)}>delete</button></div>)}
+            {/* {allDtails.map((number, index, id) => {
+                console.log(number.key)
             })} */}
         </div>
     );

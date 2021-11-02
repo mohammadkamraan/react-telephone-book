@@ -18,6 +18,7 @@ const Add = () => {
         let name = e.target.value
         setAudience(name)
     }
+
     const sendToRedux = () => {
         axios.post(`https://react-telephone-book-default-rtdb.asia-southeast1.firebasedatabase.app/telephone.json`, { phoneNum: phone, contact: audience })
             .then(response => {
@@ -26,20 +27,23 @@ const Add = () => {
             .catch(e => {
                 console.log(e)
             })
-
         dispatch(sendNums(phone))
         dispatch(sendNames(audience))
+        setPhone('')
+        setAudience('')
     }
     return (
         <div className='div container mt-2 mb-5 bg-blue-300 rounded-lg '>
             <p className='p text-white text-center'>please add info</p>
             <input type='text' placeholder='phone' className='phoneInput border-2 border-blue-300 rounded-lg 
             bg-purple-200 block placeholder-white hover:bg-purple-300 mx-auto mb-3'
-                onChange={savePhone} />
+                onChange={savePhone}
+                value={phone} />
             <input type='text' placeholder='name' className='nameInput bg-purple-200 mb-3
             border-2 border-blue-300 rounded-lg placeholder-white hover:bg-purple-300 block
             mx-auto'
-                onChange={saveName} />
+                onChange={saveName}
+                value={audience} />
             <button className='button bg-green-300 p-2 rounded-lg hover:bg-green-400 block
                 mx-auto'
                 onClick={sendToRedux}>save</button>
